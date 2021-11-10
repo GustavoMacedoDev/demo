@@ -13,6 +13,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ *
+ */
 @RestController
 @RequestMapping("/product")
 @CrossOrigin(origins = "*")
@@ -21,6 +24,9 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    /*
+     * find Product by Id
+     */
     @GetMapping("/id/{id}")
     public ResponseEntity<Response<Product>> findById(@PathVariable("id") Integer id) {
         Response<Product> response = new Response<Product>();
@@ -35,13 +41,18 @@ public class ProductController {
         return ResponseEntity.ok(response);
 
     }
-
+    /*
+     * find all products
+     */
     @GetMapping("/products")
     public @ResponseBody List<Product> findAll() {
         return productService.findAll();
 
     }
 
+    /*
+     * persist a new product
+     */
     @PostMapping("/save")
     public ResponseEntity<Void> saveProduct(@Validated @RequestBody Product product) {
 
@@ -54,6 +65,32 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 
+    /*
+     * update an existent product
+     */
 
+    @PutMapping("/update")
+    public ResponseEntity<Void> updateProduct(@Validated @RequestBody Product product) {
+
+        product = productService.update(product);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(product.getId()).toUri();
+        ResponseEntity.created(uri).build();
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/inactivate")
+    public ResponseEntity<Void> inactivateProduct(@Validated @RequestBody Product product) {
+
+        product = productService.inactivate(product);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(product.getId()).toUri();
+        ResponseEntity.created(uri).build();
+
+        return ResponseEntity.noContent().build();
+    }
 
 }

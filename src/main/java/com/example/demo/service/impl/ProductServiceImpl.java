@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.domain.Product;
+import com.example.demo.enums.StatusEnum;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product save(Product product) {
+        product.setId(null);
+        product.setStatusEnum(StatusEnum.ACTIVE);
         return productRepository.save(product);
     }
 
@@ -32,12 +35,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> update(Product product) {
-        return Optional.of(productRepository.save(product));
+    public Product update(Product product) {
+
+        return productRepository.saveAndFlush(product);
     }
 
     @Override
-    public Optional<Product> inactivate(Product product) {
-        return Optional.empty();
+    public Product inactivate(Product product) {
+        return productRepository.saveAndFlush(product);
     }
 }

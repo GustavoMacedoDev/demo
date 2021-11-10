@@ -13,9 +13,9 @@ public interface ProductService {
 
     Optional<Product> findById(Integer id);
 
-    Optional<Product> update(Product product);
+    Product update(Product product);
 
-    Optional<Product> inactivate(Product product);
+    Product inactivate(Product product);
 
 
 }

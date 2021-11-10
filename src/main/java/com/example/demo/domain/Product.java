@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
-import lombok.EqualsAndHashCode;
+import com.example.demo.enums.StatusEnum;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "product")
-@Getter @Setter @NoArgsConstructor @EqualsAndHashCode
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -18,9 +19,13 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @Column(unique = true)
     private String name;
 
     private Double price;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private StatusEnum statusEnum;
 
 }
