@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponents;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -20,6 +20,11 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @GetMapping("/categories")
+    public List<Category> findAll() {
+        return categoryService.findAll();
+    }
 
     @GetMapping("/id")
     public ResponseEntity<Response<Category>> findById(@PathVariable("id") Integer id) {
@@ -47,4 +52,19 @@ public class CategoryController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<Void> update(@Validated @RequestBody Category category) {
+        category = categoryService.update(category);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(category.getId()).toUri();
+        ResponseEntity.created(uri).build();
+
+        return ResponseEntity.noContent().build();
+    }
+
+
+
+
 }

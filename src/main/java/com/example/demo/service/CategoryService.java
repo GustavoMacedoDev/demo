@@ -16,5 +16,4 @@ public interface CategoryService {
 
     Category update(Category category);
 
-    Category inactivate(Category category);
 }

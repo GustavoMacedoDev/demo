@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.domain.Category;
+import com.example.demo.enums.StatusEnum;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,5 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.saveAndFlush(category);
     }
 
-    @Override
-    public Category inactivate(Category category) {
-        return categoryRepository.saveAndFlush(category);
-    }
+
 }
