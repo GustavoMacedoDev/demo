@@ -6,25 +6,24 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "estate")
+@Table(name = "city")
 @Getter @Setter @NoArgsConstructor
-public class Estate implements Serializable {
+public class City implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "abbreviation", nullable = false, unique = true)
-    private String abbreviation;
+    @ManyToOne
+    @JoinColumn(name = "estate_id")
+    private Estate estate;
 
-    @OneToMany(mappedBy = "estate")
-    private List<City> cities = new ArrayList<>();
 }
