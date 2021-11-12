@@ -44,6 +44,8 @@ public class AuthenticationController {
             @Validated @RequestBody JwtAuthenticationDto authenticationDto, BindingResult result
             ) throws AuthenticationException {
 
+        System.out.println(authenticationDto);
+
         Response<TokenDto> response = new Response<TokenDto>();
 
         if(result.hasErrors()) {
